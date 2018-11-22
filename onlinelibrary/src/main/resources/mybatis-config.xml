@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+<!-- 	<typeAliases>
+		<typeAlias alias="row" type="com.zlzkj.core.sql.Row" />
+	</typeAliases> -->
+    <!--<typeAliases>
+        <typeAlias alias="Integer" type="java.lang.Integer" />
+        <typeAlias alias="Long" type="java.lang.Long" />
+        <typeAlias alias="HashMap" type="java.util.HashMap" />
+        <typeAlias alias="LinkedHashMap" type="java.util.LinkedHashMap" />
+        <typeAlias alias="ArrayList" type="java.util.ArrayList" />
+        <typeAlias alias="LinkedList" type="java.util.LinkedList" />
+    </typeAliases>-->
+    <!--<plugins>
+        <plugin interceptor="com.github.pagehelper.PageHelper">
+            &lt;!&ndash; 设置数据库类型 Oracle,Mysql,MariaDB,SQLite,Hsqldb,PostgreSQL六种数据库&ndash;&gt;
+            <property name="dialect" value="mysql"/>
+        </plugin>
+    </plugins>-->
+</configuration>
