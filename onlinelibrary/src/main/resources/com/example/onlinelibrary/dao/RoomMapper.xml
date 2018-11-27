@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.onlinelibrary.dao.RoomMapper" >
+  <resultMap id="BaseResultMap" type="com.example.onlinelibrary.entity.Room" >
+    <id column="id" property="id" jdbcType="CHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="room_code" property="roomCode" jdbcType="CHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.example.onlinelibrary.entity.Room" extends="BaseResultMap" >
+    <result column="describption" property="describption" jdbcType="VARBINARY" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, room_code, status, address
+  </sql>
+  <sql id="Blob_Column_List" >
+    describption
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from all_room
+    where id = #{id,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from all_room
+    where id = #{id,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.onlinelibrary.entity.Room" >
+    insert into all_room (id, name, room_code, 
+      status, address, describption
+      )
+    values (#{id,jdbcType=CHAR}, #{name,jdbcType=VARCHAR}, #{roomCode,jdbcType=CHAR}, 
+      #{status,jdbcType=TINYINT}, #{address,jdbcType=VARCHAR}, #{describption,jdbcType=VARBINARY}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.onlinelibrary.entity.Room" >
+    insert into all_room
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="roomCode != null" >
+        room_code,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="describption != null" >
+        describption,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="roomCode != null" >
+        #{roomCode,jdbcType=CHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="describption != null" >
+        #{describption,jdbcType=VARBINARY},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.onlinelibrary.entity.Room" >
+    update all_room
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="roomCode != null" >
+        room_code = #{roomCode,jdbcType=CHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="describption != null" >
+        describption = #{describption,jdbcType=VARBINARY},
+      </if>
+    </set>
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.example.onlinelibrary.entity.Room" >
+    update all_room
+    set name = #{name,jdbcType=VARCHAR},
+      room_code = #{roomCode,jdbcType=CHAR},
+      status = #{status,jdbcType=TINYINT},
+      address = #{address,jdbcType=VARCHAR},
+      describption = #{describption,jdbcType=VARBINARY}
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.onlinelibrary.entity.Room" >
+    update all_room
+    set name = #{name,jdbcType=VARCHAR},
+      room_code = #{roomCode,jdbcType=CHAR},
+      status = #{status,jdbcType=TINYINT},
+      address = #{address,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=CHAR}
+  </update>
+</mapper>

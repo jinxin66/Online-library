@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.onlinelibrary.dao.BookMapper" >
+  <resultMap id="BaseResultMap" type="com.example.onlinelibrary.entity.Book" >
+    <id column="id" property="id" jdbcType="CHAR" />
+    <result column="book_code" property="bookCode" jdbcType="CHAR" />
+    <result column="book_isbn" property="bookIsbn" jdbcType="CHAR" />
+    <result column="book_name" property="bookName" jdbcType="CHAR" />
+    <result column="book_writer" property="bookWriter" jdbcType="CHAR" />
+    <result column="book_publish" property="bookPublish" jdbcType="CHAR" />
+    <result column="book_version" property="bookVersion" jdbcType="CHAR" />
+    <result column="book_score" property="bookScore" jdbcType="DOUBLE" />
+    <result column="book_price" property="bookPrice" jdbcType="DOUBLE" />
+    <result column="book_description" property="bookDescription" jdbcType="CHAR" />
+    <result column="status" property="status" jdbcType="BIT" />
+    <result column="last_borrowed_time" property="lastBorrowedTime" jdbcType="TIMESTAMP" />
+    <result column="last_borrower_id" property="lastBorrowerId" jdbcType="CHAR" />
+    <result column="location_id" property="locationId" jdbcType="CHAR" />
+    <result column="rate" property="rate" jdbcType="DOUBLE" />
+    <result column="describption" property="describption" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, book_code, book_isbn, book_name, book_writer, book_publish, book_version, book_score, 
+    book_price, book_description, status, last_borrowed_time, last_borrower_id, location_id, 
+    rate, describption
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from all_book
+    where id = #{id,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from all_book
+    where id = #{id,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.onlinelibrary.entity.Book" >
+    insert into all_book (id, book_code, book_isbn, 
+      book_name, book_writer, book_publish, 
+      book_version, book_score, book_price, 
+      book_description, status, last_borrowed_time, 
+      last_borrower_id, location_id, rate, 
+      describption)
+    values (#{id,jdbcType=CHAR}, #{bookCode,jdbcType=CHAR}, #{bookIsbn,jdbcType=CHAR}, 
+      #{bookName,jdbcType=CHAR}, #{bookWriter,jdbcType=CHAR}, #{bookPublish,jdbcType=CHAR}, 
+      #{bookVersion,jdbcType=CHAR}, #{bookScore,jdbcType=DOUBLE}, #{bookPrice,jdbcType=DOUBLE}, 
+      #{bookDescription,jdbcType=CHAR}, #{status,jdbcType=BIT}, #{lastBorrowedTime,jdbcType=TIMESTAMP}, 
+      #{lastBorrowerId,jdbcType=CHAR}, #{locationId,jdbcType=CHAR}, #{rate,jdbcType=DOUBLE}, 
+      #{describption,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.onlinelibrary.entity.Book" >
+    insert into all_book
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="bookCode != null" >
+        book_code,
+      </if>
+      <if test="bookIsbn != null" >
+        book_isbn,
+      </if>
+      <if test="bookName != null" >
+        book_name,
+      </if>
+      <if test="bookWriter != null" >
+        book_writer,
+      </if>
+      <if test="bookPublish != null" >
+        book_publish,
+      </if>
+      <if test="bookVersion != null" >
+        book_version,
+      </if>
+      <if test="bookScore != null" >
+        book_score,
+      </if>
+      <if test="bookPrice != null" >
+        book_price,
+      </if>
+      <if test="bookDescription != null" >
+        book_description,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="lastBorrowedTime != null" >
+        last_borrowed_time,
+      </if>
+      <if test="lastBorrowerId != null" >
+        last_borrower_id,
+      </if>
+      <if test="locationId != null" >
+        location_id,
+      </if>
+      <if test="rate != null" >
+        rate,
+      </if>
+      <if test="describption != null" >
+        describption,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="bookCode != null" >
+        #{bookCode,jdbcType=CHAR},
+      </if>
+      <if test="bookIsbn != null" >
+        #{bookIsbn,jdbcType=CHAR},
+      </if>
+      <if test="bookName != null" >
+        #{bookName,jdbcType=CHAR},
+      </if>
+      <if test="bookWriter != null" >
+        #{bookWriter,jdbcType=CHAR},
+      </if>
+      <if test="bookPublish != null" >
+        #{bookPublish,jdbcType=CHAR},
+      </if>
+      <if test="bookVersion != null" >
+        #{bookVersion,jdbcType=CHAR},
+      </if>
+      <if test="bookScore != null" >
+        #{bookScore,jdbcType=DOUBLE},
+      </if>
+      <if test="bookPrice != null" >
+        #{bookPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="bookDescription != null" >
+        #{bookDescription,jdbcType=CHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=BIT},
+      </if>
+      <if test="lastBorrowedTime != null" >
+        #{lastBorrowedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastBorrowerId != null" >
+        #{lastBorrowerId,jdbcType=CHAR},
+      </if>
+      <if test="locationId != null" >
+        #{locationId,jdbcType=CHAR},
+      </if>
+      <if test="rate != null" >
+        #{rate,jdbcType=DOUBLE},
+      </if>
+      <if test="describption != null" >
+        #{describption,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.onlinelibrary.entity.Book" >
+    update all_book
+    <set >
+      <if test="bookCode != null" >
+        book_code = #{bookCode,jdbcType=CHAR},
+      </if>
+      <if test="bookIsbn != null" >
+        book_isbn = #{bookIsbn,jdbcType=CHAR},
+      </if>
+      <if test="bookName != null" >
+        book_name = #{bookName,jdbcType=CHAR},
+      </if>
+      <if test="bookWriter != null" >
+        book_writer = #{bookWriter,jdbcType=CHAR},
+      </if>
+      <if test="bookPublish != null" >
+        book_publish = #{bookPublish,jdbcType=CHAR},
+      </if>
+      <if test="bookVersion != null" >
+        book_version = #{bookVersion,jdbcType=CHAR},
+      </if>
+      <if test="bookScore != null" >
+        book_score = #{bookScore,jdbcType=DOUBLE},
+      </if>
+      <if test="bookPrice != null" >
+        book_price = #{bookPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="bookDescription != null" >
+        book_description = #{bookDescription,jdbcType=CHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=BIT},
+      </if>
+      <if test="lastBorrowedTime != null" >
+        last_borrowed_time = #{lastBorrowedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastBorrowerId != null" >
+        last_borrower_id = #{lastBorrowerId,jdbcType=CHAR},
+      </if>
+      <if test="locationId != null" >
+        location_id = #{locationId,jdbcType=CHAR},
+      </if>
+      <if test="rate != null" >
+        rate = #{rate,jdbcType=DOUBLE},
+      </if>
+      <if test="describption != null" >
+        describption = #{describption,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.onlinelibrary.entity.Book" >
+    update all_book
+    set book_code = #{bookCode,jdbcType=CHAR},
+      book_isbn = #{bookIsbn,jdbcType=CHAR},
+      book_name = #{bookName,jdbcType=CHAR},
+      book_writer = #{bookWriter,jdbcType=CHAR},
+      book_publish = #{bookPublish,jdbcType=CHAR},
+      book_version = #{bookVersion,jdbcType=CHAR},
+      book_score = #{bookScore,jdbcType=DOUBLE},
+      book_price = #{bookPrice,jdbcType=DOUBLE},
+      book_description = #{bookDescription,jdbcType=CHAR},
+      status = #{status,jdbcType=BIT},
+      last_borrowed_time = #{lastBorrowedTime,jdbcType=TIMESTAMP},
+      last_borrower_id = #{lastBorrowerId,jdbcType=CHAR},
+      location_id = #{locationId,jdbcType=CHAR},
+      rate = #{rate,jdbcType=DOUBLE},
+      describption = #{describption,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=CHAR}
+  </update>
+</mapper>

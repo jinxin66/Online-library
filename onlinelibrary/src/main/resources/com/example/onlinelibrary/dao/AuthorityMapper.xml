@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.onlinelibrary.dao.AuthorityMapper" >
+  <resultMap id="BaseResultMap" type="com.example.onlinelibrary.entity.Authority" >
+    <id column="id" property="id" jdbcType="CHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="authority_code" property="authorityCode" jdbcType="CHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, authority_code, description
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from all_authority
+    where id = #{id,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from all_authority
+    where id = #{id,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.onlinelibrary.entity.Authority" >
+    insert into all_authority (id, name, authority_code, 
+      description)
+    values (#{id,jdbcType=CHAR}, #{name,jdbcType=VARCHAR}, #{authorityCode,jdbcType=CHAR}, 
+      #{description,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.onlinelibrary.entity.Authority" >
+    insert into all_authority
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="authorityCode != null" >
+        authority_code,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="authorityCode != null" >
+        #{authorityCode,jdbcType=CHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.onlinelibrary.entity.Authority" >
+    update all_authority
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="authorityCode != null" >
+        authority_code = #{authorityCode,jdbcType=CHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.onlinelibrary.entity.Authority" >
+    update all_authority
+    set name = #{name,jdbcType=VARCHAR},
+      authority_code = #{authorityCode,jdbcType=CHAR},
+      description = #{description,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=CHAR}
+  </update>
+</mapper>

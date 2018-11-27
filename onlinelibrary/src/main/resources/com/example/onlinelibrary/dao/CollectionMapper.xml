@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.onlinelibrary.dao.CollectionMapper" >
+  <resultMap id="BaseResultMap" type="com.example.onlinelibrary.entity.Collection" >
+    <id column="id" property="id" jdbcType="CHAR" />
+    <result column="user_id" property="userId" jdbcType="CHAR" />
+    <result column="category" property="category" jdbcType="INTEGER" />
+    <result column="book_id" property="bookId" jdbcType="CHAR" />
+    <result column="pub_id" property="pubId" jdbcType="CHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="BIT" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, category, book_id, pub_id, create_time, status, description
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from all_collection
+    where id = #{id,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from all_collection
+    where id = #{id,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.onlinelibrary.entity.Collection" >
+    insert into all_collection (id, user_id, category, 
+      book_id, pub_id, create_time, 
+      status, description)
+    values (#{id,jdbcType=CHAR}, #{userId,jdbcType=CHAR}, #{category,jdbcType=INTEGER}, 
+      #{bookId,jdbcType=CHAR}, #{pubId,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=BIT}, #{description,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.onlinelibrary.entity.Collection" >
+    insert into all_collection
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="category != null" >
+        category,
+      </if>
+      <if test="bookId != null" >
+        book_id,
+      </if>
+      <if test="pubId != null" >
+        pub_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=CHAR},
+      </if>
+      <if test="category != null" >
+        #{category,jdbcType=INTEGER},
+      </if>
+      <if test="bookId != null" >
+        #{bookId,jdbcType=CHAR},
+      </if>
+      <if test="pubId != null" >
+        #{pubId,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=BIT},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.onlinelibrary.entity.Collection" >
+    update all_collection
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=CHAR},
+      </if>
+      <if test="category != null" >
+        category = #{category,jdbcType=INTEGER},
+      </if>
+      <if test="bookId != null" >
+        book_id = #{bookId,jdbcType=CHAR},
+      </if>
+      <if test="pubId != null" >
+        pub_id = #{pubId,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=BIT},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.onlinelibrary.entity.Collection" >
+    update all_collection
+    set user_id = #{userId,jdbcType=CHAR},
+      category = #{category,jdbcType=INTEGER},
+      book_id = #{bookId,jdbcType=CHAR},
+      pub_id = #{pubId,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=BIT},
+      description = #{description,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=CHAR}
+  </update>
+</mapper>

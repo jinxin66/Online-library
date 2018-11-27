@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.onlinelibrary.dao.TicketMapper" >
+  <resultMap id="BaseResultMap" type="com.example.onlinelibrary.entity.Ticket" >
+    <id column="id" property="id" jdbcType="CHAR" />
+    <result column="ticket_code" property="ticketCode" jdbcType="CHAR" />
+    <result column="user_id" property="userId" jdbcType="CHAR" />
+    <result column="borrow_record_id" property="borrowRecordId" jdbcType="CHAR" />
+    <result column="book_id" property="bookId" jdbcType="CHAR" />
+    <result column="ticket_fee" property="ticketFee" jdbcType="DOUBLE" />
+    <result column="over_time" property="overTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="BIT" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, ticket_code, user_id, borrow_record_id, book_id, ticket_fee, over_time, create_time, 
+    pay_time, status, description
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from all_ticket
+    where id = #{id,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from all_ticket
+    where id = #{id,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.onlinelibrary.entity.Ticket" >
+    insert into all_ticket (id, ticket_code, user_id, 
+      borrow_record_id, book_id, ticket_fee, 
+      over_time, create_time, pay_time, 
+      status, description)
+    values (#{id,jdbcType=CHAR}, #{ticketCode,jdbcType=CHAR}, #{userId,jdbcType=CHAR}, 
+      #{borrowRecordId,jdbcType=CHAR}, #{bookId,jdbcType=CHAR}, #{ticketFee,jdbcType=DOUBLE}, 
+      #{overTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{payTime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=BIT}, #{description,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.onlinelibrary.entity.Ticket" >
+    insert into all_ticket
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="ticketCode != null" >
+        ticket_code,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="borrowRecordId != null" >
+        borrow_record_id,
+      </if>
+      <if test="bookId != null" >
+        book_id,
+      </if>
+      <if test="ticketFee != null" >
+        ticket_fee,
+      </if>
+      <if test="overTime != null" >
+        over_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="payTime != null" >
+        pay_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="ticketCode != null" >
+        #{ticketCode,jdbcType=CHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=CHAR},
+      </if>
+      <if test="borrowRecordId != null" >
+        #{borrowRecordId,jdbcType=CHAR},
+      </if>
+      <if test="bookId != null" >
+        #{bookId,jdbcType=CHAR},
+      </if>
+      <if test="ticketFee != null" >
+        #{ticketFee,jdbcType=DOUBLE},
+      </if>
+      <if test="overTime != null" >
+        #{overTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payTime != null" >
+        #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=BIT},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.onlinelibrary.entity.Ticket" >
+    update all_ticket
+    <set >
+      <if test="ticketCode != null" >
+        ticket_code = #{ticketCode,jdbcType=CHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=CHAR},
+      </if>
+      <if test="borrowRecordId != null" >
+        borrow_record_id = #{borrowRecordId,jdbcType=CHAR},
+      </if>
+      <if test="bookId != null" >
+        book_id = #{bookId,jdbcType=CHAR},
+      </if>
+      <if test="ticketFee != null" >
+        ticket_fee = #{ticketFee,jdbcType=DOUBLE},
+      </if>
+      <if test="overTime != null" >
+        over_time = #{overTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payTime != null" >
+        pay_time = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=BIT},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.onlinelibrary.entity.Ticket" >
+    update all_ticket
+    set ticket_code = #{ticketCode,jdbcType=CHAR},
+      user_id = #{userId,jdbcType=CHAR},
+      borrow_record_id = #{borrowRecordId,jdbcType=CHAR},
+      book_id = #{bookId,jdbcType=CHAR},
+      ticket_fee = #{ticketFee,jdbcType=DOUBLE},
+      over_time = #{overTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      pay_time = #{payTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=BIT},
+      description = #{description,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=CHAR}
+  </update>
+</mapper>

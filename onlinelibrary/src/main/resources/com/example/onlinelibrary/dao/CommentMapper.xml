@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.onlinelibrary.dao.CommentMapper" >
+  <resultMap id="BaseResultMap" type="com.example.onlinelibrary.entity.Comment" >
+    <id column="id" property="id" jdbcType="CHAR" />
+    <result column="category" property="category" jdbcType="INTEGER" />
+    <result column="from_id" property="fromId" jdbcType="CHAR" />
+    <result column="to_id" property="toId" jdbcType="CHAR" />
+    <result column="comment_score" property="commentScore" jdbcType="DOUBLE" />
+    <result column="comment_word" property="commentWord" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="support_num" property="supportNum" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, category, from_id, to_id, comment_score, comment_word, create_time, support_num, 
+    status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from all_comment
+    where id = #{id,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from all_comment
+    where id = #{id,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.onlinelibrary.entity.Comment" >
+    insert into all_comment (id, category, from_id, 
+      to_id, comment_score, comment_word, 
+      create_time, support_num, status
+      )
+    values (#{id,jdbcType=CHAR}, #{category,jdbcType=INTEGER}, #{fromId,jdbcType=CHAR}, 
+      #{toId,jdbcType=CHAR}, #{commentScore,jdbcType=DOUBLE}, #{commentWord,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{supportNum,jdbcType=INTEGER}, #{status,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.onlinelibrary.entity.Comment" >
+    insert into all_comment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="category != null" >
+        category,
+      </if>
+      <if test="fromId != null" >
+        from_id,
+      </if>
+      <if test="toId != null" >
+        to_id,
+      </if>
+      <if test="commentScore != null" >
+        comment_score,
+      </if>
+      <if test="commentWord != null" >
+        comment_word,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="supportNum != null" >
+        support_num,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="category != null" >
+        #{category,jdbcType=INTEGER},
+      </if>
+      <if test="fromId != null" >
+        #{fromId,jdbcType=CHAR},
+      </if>
+      <if test="toId != null" >
+        #{toId,jdbcType=CHAR},
+      </if>
+      <if test="commentScore != null" >
+        #{commentScore,jdbcType=DOUBLE},
+      </if>
+      <if test="commentWord != null" >
+        #{commentWord,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="supportNum != null" >
+        #{supportNum,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.onlinelibrary.entity.Comment" >
+    update all_comment
+    <set >
+      <if test="category != null" >
+        category = #{category,jdbcType=INTEGER},
+      </if>
+      <if test="fromId != null" >
+        from_id = #{fromId,jdbcType=CHAR},
+      </if>
+      <if test="toId != null" >
+        to_id = #{toId,jdbcType=CHAR},
+      </if>
+      <if test="commentScore != null" >
+        comment_score = #{commentScore,jdbcType=DOUBLE},
+      </if>
+      <if test="commentWord != null" >
+        comment_word = #{commentWord,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="supportNum != null" >
+        support_num = #{supportNum,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.onlinelibrary.entity.Comment" >
+    update all_comment
+    set category = #{category,jdbcType=INTEGER},
+      from_id = #{fromId,jdbcType=CHAR},
+      to_id = #{toId,jdbcType=CHAR},
+      comment_score = #{commentScore,jdbcType=DOUBLE},
+      comment_word = #{commentWord,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      support_num = #{supportNum,jdbcType=INTEGER},
+      status = #{status,jdbcType=BIT}
+    where id = #{id,jdbcType=CHAR}
+  </update>
+</mapper>

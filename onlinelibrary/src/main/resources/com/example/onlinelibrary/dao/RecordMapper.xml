@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.onlinelibrary.dao.RecordMapper" >
+  <resultMap id="BaseResultMap" type="com.example.onlinelibrary.entity.Record" >
+    <id column="id" property="id" jdbcType="CHAR" />
+    <result column="borrower_id" property="borrowerId" jdbcType="CHAR" />
+    <result column="book_id" property="bookId" jdbcType="CHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="arrenge_return_time" property="arrengeReturnTime" jdbcType="TIMESTAMP" />
+    <result column="return_time" property="returnTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="BIT" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, borrower_id, book_id, create_time, arrenge_return_time, return_time, status, 
+    description
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from all_borrow_record
+    where id = #{id,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from all_borrow_record
+    where id = #{id,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.onlinelibrary.entity.Record" >
+    insert into all_borrow_record (id, borrower_id, book_id, 
+      create_time, arrenge_return_time, return_time, 
+      status, description)
+    values (#{id,jdbcType=CHAR}, #{borrowerId,jdbcType=CHAR}, #{bookId,jdbcType=CHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{arrengeReturnTime,jdbcType=TIMESTAMP}, #{returnTime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=BIT}, #{description,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.onlinelibrary.entity.Record" >
+    insert into all_borrow_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="borrowerId != null" >
+        borrower_id,
+      </if>
+      <if test="bookId != null" >
+        book_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="arrengeReturnTime != null" >
+        arrenge_return_time,
+      </if>
+      <if test="returnTime != null" >
+        return_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="borrowerId != null" >
+        #{borrowerId,jdbcType=CHAR},
+      </if>
+      <if test="bookId != null" >
+        #{bookId,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="arrengeReturnTime != null" >
+        #{arrengeReturnTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="returnTime != null" >
+        #{returnTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=BIT},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.onlinelibrary.entity.Record" >
+    update all_borrow_record
+    <set >
+      <if test="borrowerId != null" >
+        borrower_id = #{borrowerId,jdbcType=CHAR},
+      </if>
+      <if test="bookId != null" >
+        book_id = #{bookId,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="arrengeReturnTime != null" >
+        arrenge_return_time = #{arrengeReturnTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="returnTime != null" >
+        return_time = #{returnTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=BIT},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.onlinelibrary.entity.Record" >
+    update all_borrow_record
+    set borrower_id = #{borrowerId,jdbcType=CHAR},
+      book_id = #{bookId,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      arrenge_return_time = #{arrengeReturnTime,jdbcType=TIMESTAMP},
+      return_time = #{returnTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=BIT},
+      description = #{description,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=CHAR}
+  </update>
+</mapper>

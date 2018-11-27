@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.onlinelibrary.dao.CompanyMapper" >
+  <resultMap id="BaseResultMap" type="com.example.onlinelibrary.entity.Company" >
+    <id column="id" property="id" jdbcType="CHAR" />
+    <result column="category_name" property="categoryName" jdbcType="CHAR" />
+    <result column="category_code" property="categoryCode" jdbcType="CHAR" />
+    <result column="status" property="status" jdbcType="BIT" />
+    <result column="describption" property="describption" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, category_name, category_code, status, describption
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from all_book_category
+    where id = #{id,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from all_book_category
+    where id = #{id,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.onlinelibrary.entity.Company" >
+    insert into all_book_category (id, category_name, category_code, 
+      status, describption)
+    values (#{id,jdbcType=CHAR}, #{categoryName,jdbcType=CHAR}, #{categoryCode,jdbcType=CHAR}, 
+      #{status,jdbcType=BIT}, #{describption,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.onlinelibrary.entity.Company" >
+    insert into all_book_category
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="categoryName != null" >
+        category_name,
+      </if>
+      <if test="categoryCode != null" >
+        category_code,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="describption != null" >
+        describption,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="categoryName != null" >
+        #{categoryName,jdbcType=CHAR},
+      </if>
+      <if test="categoryCode != null" >
+        #{categoryCode,jdbcType=CHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=BIT},
+      </if>
+      <if test="describption != null" >
+        #{describption,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.onlinelibrary.entity.Company" >
+    update all_book_category
+    <set >
+      <if test="categoryName != null" >
+        category_name = #{categoryName,jdbcType=CHAR},
+      </if>
+      <if test="categoryCode != null" >
+        category_code = #{categoryCode,jdbcType=CHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=BIT},
+      </if>
+      <if test="describption != null" >
+        describption = #{describption,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.onlinelibrary.entity.Company" >
+    update all_book_category
+    set category_name = #{categoryName,jdbcType=CHAR},
+      category_code = #{categoryCode,jdbcType=CHAR},
+      status = #{status,jdbcType=BIT},
+      describption = #{describption,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=CHAR}
+  </update>
+</mapper>
