@@ -1,9 +1,7 @@
-package com.example.onlinelibrary.service.bookManager;
+package com.example.onlinelibrary.service.admin.collection;
 
-import com.example.onlinelibrary.dao.BookMapper;
-import com.example.onlinelibrary.dao.RecordMapper;
-import com.example.onlinelibrary.entity.Book;
-import com.example.onlinelibrary.utils.Constant;
+import com.example.onlinelibrary.dao.CollectionMapper;
+import com.example.onlinelibrary.entity.Collection;
 import com.example.onlinelibrary.utils.IDGenerator;
 import com.example.onlinelibrary.utils.Page;
 
@@ -20,54 +18,52 @@ import java.util.Map;
 
 @Service
 @Transactional
-public class BookService {
+public class CollectionService {
 
     @Value("${PAGE_SIZE}")
     private int PAGE_SIZE;
 
     @Autowired
-    private BookMapper mapper;
-    @Autowired
-    private RecordMapper recordMapper;
+    private CollectionMapper mapper;
 
     public Integer delete(String id){
         return mapper.deleteByPrimaryKey(id);
     }
 
-    public Integer deletebyIds(String[]ids){
+    public Integer deletebyIds(String[]id){
         Map parmMap = new HashMap();
-        parmMap.put("ids",ids);
+        parmMap.put("ids",id);
+        return mapper.deleteByMap(parmMap);
+    }
 
-        if(!canDeleteBook(ids) || mapper.deleteByMap(parmMap) != ids.length){
-            throw new RuntimeException("部分图书不可删除！");
-        }
-        return Constant.SUCCESS_INT;
+    public Integer deleteByUserIdAndId(Map<String,Object> map){
+        return mapper.deleteByUserIdAndId(map);
+    }
+
+    public Integer update(Collection entity){
+        return mapper.updateByPrimaryKeySelective(entity);
     }
 
     public Integer enable(String id){
-        Book entity = new Book();
+        Collection entity = new Collection();
         entity.setId(id);
-        entity.setStatus(0);
+        entity.setStatus(false);
         return mapper.updateByPrimaryKeySelective(entity);
     }
 
     public Integer disable(String id){
-        Book entity = new Book();
+        Collection entity = new Collection();
         entity.setId(id);
-        entity.setStatus(1);
+        entity.setStatus(true);
         return mapper.updateByPrimaryKeySelective(entity);
     }
 
-    public Integer update(Book entity){
-        return mapper.updateByPrimaryKeySelective(entity);
-    }
-
-    public Integer save(Book entity) {
+    public Integer save(Collection entity) {
         entity.setId(IDGenerator.generator());
         return mapper.insertSelective(entity);
     }
 
-    public Book findById(String id){
+    public Collection findById(String id){
         return mapper.selectByPrimaryKey(id);
     }
 
@@ -80,14 +76,5 @@ public class BookService {
         parmMap.put("start",(nowPage-1)*PAGE_SIZE);
         parmMap.put("end",PAGE_SIZE);
         return new Page(findByMap(parmMap),mapper.countByMap(parmMap),nowPage,PAGE_SIZE);
-    }
-
-    private boolean canDeleteBook(String []ids){
-        Map parmMap = new HashMap();
-        parmMap.put("categoryIds",ids);
-        return recordMapper.countByMap(parmMap) == 0;
-    }
-    public List<Row> getDetailsByMap(Map<String,Object> map){
-        return mapper.selectDetailsByMap(map);
     }
 }

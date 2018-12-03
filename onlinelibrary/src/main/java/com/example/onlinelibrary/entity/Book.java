@@ -17,13 +17,15 @@ public class Book {
 
     private String bookVersion;
 
+    private String bookImg;
+
     private Double bookScore;
 
     private Double bookPrice;
 
     private String bookDescription;
 
-    private Boolean status;
+    private int status;
 
     private Date lastBorrowedTime;
 
@@ -91,6 +93,14 @@ public class Book {
         this.bookVersion = bookVersion == null ? null : bookVersion.trim();
     }
 
+    public String getBookImg() {
+        return bookImg;
+    }
+
+    public void setBookImg(String bookImg) {
+        this.bookImg = bookImg == null ? null : bookImg.trim();
+    }
+
     public Double getBookScore() {
         return bookScore;
     }
@@ -115,11 +125,11 @@ public class Book {
         this.bookDescription = bookDescription == null ? null : bookDescription.trim();
     }
 
-    public Boolean getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 

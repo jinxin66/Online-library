@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.example.onlinelibrary.dao.CompanyMapper" >
-  <resultMap id="BaseResultMap" type="com.example.onlinelibrary.entity.Company" >
+<mapper namespace="com.example.onlinelibrary.dao.CategoryMapper" >
+  <resultMap id="BaseResultMap" type="com.example.onlinelibrary.entity.Category" >
     <id column="id" property="id" jdbcType="CHAR" />
     <result column="category_name" property="categoryName" jdbcType="CHAR" />
     <result column="category_code" property="categoryCode" jdbcType="CHAR" />
+    <result column="category_img" property="categoryImg" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="BIT" />
     <result column="describption" property="describption" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, category_name, category_code, status, describption
+    id, category_name, category_code, category_img, status, describption
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -21,13 +22,15 @@
     delete from all_book_category
     where id = #{id,jdbcType=CHAR}
   </delete>
-  <insert id="insert" parameterType="com.example.onlinelibrary.entity.Company" >
+  <insert id="insert" parameterType="com.example.onlinelibrary.entity.Category" >
     insert into all_book_category (id, category_name, category_code, 
-      status, describption)
+      category_img, status, describption
+      )
     values (#{id,jdbcType=CHAR}, #{categoryName,jdbcType=CHAR}, #{categoryCode,jdbcType=CHAR}, 
-      #{status,jdbcType=BIT}, #{describption,jdbcType=VARCHAR})
+      #{categoryImg,jdbcType=VARCHAR}, #{status,jdbcType=BIT}, #{describption,jdbcType=VARCHAR}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.example.onlinelibrary.entity.Company" >
+  <insert id="insertSelective" parameterType="com.example.onlinelibrary.entity.Category" >
     insert into all_book_category
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -38,6 +41,9 @@
       </if>
       <if test="categoryCode != null" >
         category_code,
+      </if>
+      <if test="categoryImg != null" >
+        category_img,
       </if>
       <if test="status != null" >
         status,
@@ -56,6 +62,9 @@
       <if test="categoryCode != null" >
         #{categoryCode,jdbcType=CHAR},
       </if>
+      <if test="categoryImg != null" >
+        #{categoryImg,jdbcType=VARCHAR},
+      </if>
       <if test="status != null" >
         #{status,jdbcType=BIT},
       </if>
@@ -64,7 +73,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.example.onlinelibrary.entity.Company" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.onlinelibrary.entity.Category" >
     update all_book_category
     <set >
       <if test="categoryName != null" >
@@ -72,6 +81,9 @@
       </if>
       <if test="categoryCode != null" >
         category_code = #{categoryCode,jdbcType=CHAR},
+      </if>
+      <if test="categoryImg != null" >
+        category_img = #{categoryImg,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
         status = #{status,jdbcType=BIT},
@@ -82,12 +94,49 @@
     </set>
     where id = #{id,jdbcType=CHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.example.onlinelibrary.entity.Company" >
+  <update id="updateByPrimaryKey" parameterType="com.example.onlinelibrary.entity.Category" >
     update all_book_category
     set category_name = #{categoryName,jdbcType=CHAR},
       category_code = #{categoryCode,jdbcType=CHAR},
+      category_img = #{categoryImg,jdbcType=VARCHAR},
       status = #{status,jdbcType=BIT},
       describption = #{describption,jdbcType=VARCHAR}
     where id = #{id,jdbcType=CHAR}
   </update>
+  
+  <delete id="deleteByMap" parameterType="map" >
+    delete from all_book_category
+    <where>
+        and id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+          #{id}
+        </foreach>
+    </where>
+  </delete>
+
+  <select id="selectByMap" resultType="flybear.hziee.core.sql.Row" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from all_book_category
+    <where>
+
+    </where>
+    <if test="start != null and start &gt; -1">
+      limit #{start} , #{end}
+    </if>
+  </select>
+
+  <select id="countByMap" resultType="java.lang.Integer" parameterType="map" >
+    select count(*)
+    from all_book_category
+    <where>
+
+    </where>
+  </select>
+  
+  <select id="selectAll" resultType="flybear.hziee.core.sql.Row" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from all_book_category
+  </select>
 </mapper>

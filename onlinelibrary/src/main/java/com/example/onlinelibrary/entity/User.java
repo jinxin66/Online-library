@@ -9,6 +9,8 @@ public class User {
 
     private String studentId;
 
+    private String password;
+
     private String roleId;
 
     private String nickname;
@@ -51,6 +53,14 @@ public class User {
 
     public void setStudentId(String studentId) {
         this.studentId = studentId == null ? null : studentId.trim();
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password == null ? null : password.trim();
     }
 
     public String getRoleId() {

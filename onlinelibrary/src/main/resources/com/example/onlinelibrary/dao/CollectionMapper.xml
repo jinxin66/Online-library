@@ -125,4 +125,55 @@
       description = #{description,jdbcType=VARCHAR}
     where id = #{id,jdbcType=CHAR}
   </update>
+  
+  <delete id="deleteByMap" parameterType="map" >
+    delete from all_collection
+    <where>
+        and id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+          #{id}
+        </foreach>
+    </where>
+  </delete>
+  
+  <delete id="deleteByUserIdAndId" parameterType="map" >
+    delete from all_collection
+    <where>
+      <if test="userId != null and userId !=''">and collection.user_id = #{userId}</if>
+      <if test="bookId != null and bookId !=''">or collection.book_id = #{bookId}</if>
+      <if test="pubId != null and pubId !=''">or collection.pub_id = #{pubId}</if>
+    </where>
+  </delete>
+
+  <!-- id, user_id, category, book_id, pub_id, create_time, status, description -->
+  <select id="selectByMap" resultType="flybear.hziee.core.sql.Row" parameterType="map" >
+    select
+    collection.*,
+    book.book_name ,book.book_img,book.book_score,book.book_writer,
+    pub.title as pub_tilet,pub.word as pub_word,pub.support_num,user.nickname as pub_writer
+    from all_collection collection
+    left join all_book book on book.id = collection.book_id
+    left join all_pub pub on pub.id = collection.pub_id
+    left join all_user user on user.id = pub.from_id
+    <where>
+      <if test="userId != null and userId !=''">and collection.user_id = #{userId}</if>
+      <if test="category != null and category !=''">and collection.category = #{category}</if>
+      <if test="bookId != null and bookId !=''">or collection.book_id = #{bookId}</if>
+      <if test="pubId != null and pubId !=''">or collection.pub_id = #{pubId}</if>
+    </where>
+    <if test="start != null and start &gt; -1">
+      limit #{start} , #{end}
+    </if>
+  </select>
+
+  <select id="countByMap" resultType="java.lang.Integer" parameterType="map" >
+    select count(distinct collection.id)
+    from all_collection collection
+    <where>
+      <if test="userId != null and userId !=''">and collection.user_id = #{userId}</if>
+      <if test="category != null and category !=''">and collection.category = #{category}</if>
+      <if test="bookId != null and bookId !=''">or collection.book_id = #{bookId}</if>
+      <if test="pubId != null and pubId !=''">or collection.pub_id = #{pubId}</if>
+    </where>
+  </select>
 </mapper>

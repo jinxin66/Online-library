@@ -79,4 +79,34 @@
       description = #{description,jdbcType=VARCHAR}
     where id = #{id,jdbcType=CHAR}
   </update>
+  
+  <delete id="deleteByMap" parameterType="map" >
+    delete from all_authority
+    <where>
+        and id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+          #{id}
+        </foreach>
+    </where>
+  </delete>
+
+  <select id="selectByMap" resultType="flybear.hziee.core.sql.Row" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from all_authority
+    <where>
+      
+    </where>
+    <if test="start != null and start &gt; -1">
+      limit #{start} , #{end}
+    </if>
+  </select>
+
+  <select id="countByMap" resultType="java.lang.Integer" parameterType="map" >
+    select count(*)
+    from x_authority
+    <where>
+
+    </where>
+  </select>
 </mapper>

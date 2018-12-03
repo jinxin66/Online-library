@@ -1,10 +1,9 @@
-package com.example.onlinelibrary.service.bookManager;
+package com.example.onlinelibrary.service.admin.user;
 
-import com.example.onlinelibrary.dao.BookMapper;
-import com.example.onlinelibrary.dao.RecordMapper;
-import com.example.onlinelibrary.entity.Book;
-import com.example.onlinelibrary.utils.Constant;
+import com.example.onlinelibrary.dao.UserMapper;
+import com.example.onlinelibrary.entity.User;
 import com.example.onlinelibrary.utils.IDGenerator;
+import com.example.onlinelibrary.utils.Md5Util;
 import com.example.onlinelibrary.utils.Page;
 
 import flybear.hziee.core.sql.Row;
@@ -20,55 +19,62 @@ import java.util.Map;
 
 @Service
 @Transactional
-public class BookService {
+public class UserService {
 
     @Value("${PAGE_SIZE}")
     private int PAGE_SIZE;
 
     @Autowired
-    private BookMapper mapper;
-    @Autowired
-    private RecordMapper recordMapper;
+    private UserMapper mapper;
 
     public Integer delete(String id){
         return mapper.deleteByPrimaryKey(id);
     }
 
-    public Integer deletebyIds(String[]ids){
+    public Integer deletebyIds(String[]id){
         Map parmMap = new HashMap();
-        parmMap.put("ids",ids);
+        parmMap.put("ids",id);
+        return mapper.deleteByMap(parmMap);
+    }
 
-        if(!canDeleteBook(ids) || mapper.deleteByMap(parmMap) != ids.length){
-            throw new RuntimeException("部分图书不可删除！");
-        }
-        return Constant.SUCCESS_INT;
+    public Integer update(User entity){
+        return mapper.updateByPrimaryKeySelective(entity);
     }
 
     public Integer enable(String id){
-        Book entity = new Book();
+        User entity = new User();
         entity.setId(id);
-        entity.setStatus(0);
+        entity.setStatus(false);
         return mapper.updateByPrimaryKeySelective(entity);
     }
 
     public Integer disable(String id){
-        Book entity = new Book();
+        User entity = new User();
         entity.setId(id);
-        entity.setStatus(1);
+        entity.setStatus(true);
         return mapper.updateByPrimaryKeySelective(entity);
     }
 
-    public Integer update(Book entity){
-        return mapper.updateByPrimaryKeySelective(entity);
-    }
-
-    public Integer save(Book entity) {
+    public Integer save(User entity) {
         entity.setId(IDGenerator.generator());
+        entity.setPassword(Md5Util.getMD5(entity.getPassword()));
         return mapper.insertSelective(entity);
     }
 
-    public Book findById(String id){
+    public User findById(String id){
         return mapper.selectByPrimaryKey(id);
+    }
+
+    public User findByWechatId(String wechatId){
+        return mapper.selectByWechatId(wechatId);
+    }
+
+    public User findByUserName(String username){
+        return mapper.selectByUserName(username);
+    }
+
+    public List<Row> findByRoleId(String roleId){
+        return mapper.selectByRoleId(roleId);
     }
 
     public List<Row> findByMap(Map<String,Object> map){
@@ -80,14 +86,5 @@ public class BookService {
         parmMap.put("start",(nowPage-1)*PAGE_SIZE);
         parmMap.put("end",PAGE_SIZE);
         return new Page(findByMap(parmMap),mapper.countByMap(parmMap),nowPage,PAGE_SIZE);
-    }
-
-    private boolean canDeleteBook(String []ids){
-        Map parmMap = new HashMap();
-        parmMap.put("categoryIds",ids);
-        return recordMapper.countByMap(parmMap) == 0;
-    }
-    public List<Row> getDetailsByMap(Map<String,Object> map){
-        return mapper.selectDetailsByMap(map);
     }
 }

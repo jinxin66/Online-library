@@ -139,4 +139,36 @@
       status = #{status,jdbcType=BIT}
     where id = #{id,jdbcType=CHAR}
   </update>
+  
+  <delete id="deleteByMap" parameterType="map" >
+    delete from all_comment
+    <where>
+        and id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+          #{id}
+        </foreach>
+    </where>
+  </delete>
+  
+  <!-- id, category, from_id, to_id, comment_score, comment_word, create_time, support_num, 
+    status -->
+  <select id="selectByMap" resultType="flybear.hziee.core.sql.Row" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from all_comment
+    <where>
+
+    </where>
+    <if test="start != null and start &gt; -1">
+      limit #{start} , #{end}
+    </if>
+  </select>
+
+  <select id="countByMap" resultType="java.lang.Integer" parameterType="map" >
+    select count(*)
+    from all_comment
+    <where>
+
+    </where>
+  </select>
 </mapper>

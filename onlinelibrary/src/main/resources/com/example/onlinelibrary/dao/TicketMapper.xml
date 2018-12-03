@@ -161,4 +161,36 @@
       description = #{description,jdbcType=VARCHAR}
     where id = #{id,jdbcType=CHAR}
   </update>
+  
+  <delete id="deleteByMap" parameterType="map" >
+    delete from all_ticket
+    <where>
+        and id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+          #{id}
+        </foreach>
+    </where>
+  </delete>
+  
+  <!-- id, ticket_code, user_id, borrow_record_id, book_id, ticket_fee, over_time, create_time, 
+    pay_time, status, description -->
+  <select id="selectByMap" resultType="flybear.hziee.core.sql.Row" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from all_ticket
+    <where>
+
+    </where>
+    <if test="start != null and start &gt; -1">
+      limit #{start} , #{end}
+    </if>
+  </select>
+
+  <select id="countByMap" resultType="java.lang.Integer" parameterType="map" >
+    select count(*)
+    from all_ticket
+    <where>
+
+    </where>
+  </select>
 </mapper>

@@ -35,16 +35,4 @@ public class BeansConfig {
 			}
 		};
 	}
-
-//	@Bean
-//    public FilterRegistrationBean  filterRegistrationBean() {
-//        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
-//        HTTPBasicAuthorizeAttribute httpBasicFilter = new HTTPBasicAuthorizeAttribute();
-//        registrationBean.setFilter(httpBasicFilter);
-//        List<String> urlPatterns = new ArrayList<String>();
-//        urlPatterns.add("/app/*");
-//        urlPatterns.add("/dict/*");
-//        registrationBean.setUrlPatterns(urlPatterns);
-//        return registrationBean;
-//    }
 }

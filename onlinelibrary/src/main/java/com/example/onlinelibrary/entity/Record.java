@@ -15,7 +15,7 @@ public class Record {
 
     private Date returnTime;
 
-    private Boolean status;
+    private int status;
 
     private String description;
 
@@ -67,11 +67,11 @@ public class Record {
         this.returnTime = returnTime;
     }
 
-    public Boolean getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 

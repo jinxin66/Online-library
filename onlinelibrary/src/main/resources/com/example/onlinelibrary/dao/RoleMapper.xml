@@ -90,4 +90,35 @@
       is_locked = #{isLocked,jdbcType=INTEGER}
     where id = #{id,jdbcType=CHAR}
   </update>
+  
+  <delete id="deleteByMap" parameterType="map" >
+    delete from all_role
+    <where>
+        and id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+          #{id}
+        </foreach>
+    </where>
+  </delete>
+  
+  <!-- id, name, role_code, description, is_locked -->
+  <select id="selectByMap" resultType="flybear.hziee.core.sql.Row" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from all_role
+    <where>
+
+    </where>
+    <if test="start != null and start &gt; -1">
+      limit #{start} , #{end}
+    </if>
+  </select>
+
+  <select id="countByMap" resultType="java.lang.Integer" parameterType="map" >
+    select count(*)
+    from all_role
+    <where>
+
+    </where>
+  </select>
 </mapper>
